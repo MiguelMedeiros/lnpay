@@ -2,7 +2,7 @@
   "name": "lnpay",
   "version": "1.0.4",
   "description": "NPM Package for LNPay.co API.",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "author": "MiguelMedeiros\\Miguel Medeiros <miguel@miguelmedeiros.com.br>",
   "email": "miguel@miguelmedeiros.com.br",
   "url": "http://miguelmedeiros.com.br",
