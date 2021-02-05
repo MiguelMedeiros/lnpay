@@ -291,7 +291,7 @@ console.log(getInvoice);
 
 Help me to stack sats! :blush:
 
-[![Bitcoin Donate Button](https://KristinitaTest.github.io/donate/Bitcoin-Donate-button.png)](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
+[bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
 
 [Or donate via Lightning Network!](https://lnpay.co/t/lnpayapi)
 
