@@ -9,6 +9,7 @@
   "private": false,
   "license": "MIT",
   "repository": "github:MiguelMedeiros/lnpay",
+  "types": "lib/index.d.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
