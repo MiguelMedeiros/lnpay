@@ -1,8 +1,8 @@
 # LNPay NodeJS API
 
 [![npm version](https://img.shields.io/npm/v/lnpay.svg?style=flat-square)](https://www.npmjs.org/package/lnpay)
-[![NPM](https://img.shields.io/david/MiguelMedeiros/lnpay-api.svg?style=flat-square)](https://david-dm.org/MiguelMedeiros/lnpay-api#info=dependencies)
-[![Known Vulnerabilities](https://snyk.io/test/github/MiguelMedeiros/lnpay-api/badge.svg)](https://snyk.io/test/github/MiguelMedeiros/lnpay-api)
+[![NPM](https://img.shields.io/david/MiguelMedeiros/lnpay.svg?style=flat-square)](https://david-dm.org/MiguelMedeiros/lnpay#info=dependencies)
+[![Known Vulnerabilities](https://snyk.io/test/github/MiguelMedeiros/lnpay/badge.svg)](https://snyk.io/test/github/MiguelMedeiros/lnpay-api)
 
 ---
 
@@ -12,17 +12,12 @@ The goal of the LNPay API is to create a toolkit interface for interaction betwe
 
 ## Features
 
-:pushpin: [Instalation](#installation)
-
-:pushpin: [Usage](#usage)
-
-:pushpin: [References](#references)
-
-:pushpin: [Donate](#donate)
-
-:pushpin: [Contribute](#contribute)
-
-:pushpin: [License](#license)
+- :pushpin: [Instalation](#installation)
+- :pushpin: [Usage](#usage)
+- :pushpin: [References](#references)
+- :pushpin: [Donate](#donate)
+- :pushpin: [Contribute](#contribute)
+- :pushpin: [License](#license)
 
 ---
 
