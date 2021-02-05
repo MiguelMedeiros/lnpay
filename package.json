@@ -11,8 +11,13 @@
   "repository": "github:MiguelMedeiros/lnpay",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "prepare": "npm run build"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "keywords": [
     "bitcoin",
     "lightning-network",
