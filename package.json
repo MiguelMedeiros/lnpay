@@ -14,7 +14,8 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "lib/**/*"
