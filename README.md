@@ -293,7 +293,7 @@ Help me to stack sats! :blush:
 
 [bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
 
-[Or donate via Lightning Network!](https://lnpay.co/t/lnpayapi)
+[Or donate via Lightning Network!](https://paywall.link/to/lnpayapi)
 
 ---
 
