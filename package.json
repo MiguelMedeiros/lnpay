@@ -8,6 +8,7 @@
   "url": "http://miguelmedeiros.com.br",
   "private": false,
   "license": "MIT",
+  "repository": "github:MiguelMedeiros/lnpay",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts"
