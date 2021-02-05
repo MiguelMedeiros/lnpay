@@ -52,6 +52,8 @@ const lnpay = LNPay({
 });
 ```
 
+<br/>
+
 ### Create Wallet
 
 Create a new wallet and corresponding access keys.
@@ -72,6 +74,8 @@ const wallet = await lnpay.createWallet({
 console.log(wallet);
 ```
 
+<br/>
+
 ### Get Balance
 
 Returns info about the wallet, including balance.
@@ -84,6 +88,8 @@ Returns info about the wallet, including balance.
 const balance = await lnpay.getBalance();
 console.log(balance);
 ```
+
+<br/>
 
 ### Get Transactions
 
@@ -104,6 +110,8 @@ const transactions = await lnpay.getTransactions({
 });
 console.log(transactions);
 ```
+
+<br/>
 
 ### Generate Invoice
 
@@ -135,6 +143,8 @@ const invoice = await lnpay.generateInvoice({
 console.log(invoice);
 ```
 
+<br/>
+
 ### Pay Invoice
 
 Generate an LN payment invoice from the specified wallet.
@@ -158,6 +168,8 @@ const payInvoice = await lnpay.payInvoice({
 });
 console.log(payInvoice);
 ```
+
+<br/>
 
 ### Keysend
 
@@ -185,6 +197,8 @@ const keysend = await lnpay.keysend({
 });
 console.log(keysend);
 ```
+
+<br/>
 
 ### Transfer Between Wallets
 
@@ -214,6 +228,8 @@ const transfer = await lnpay.transfer({
 console.log(transfer);
 ```
 
+<br/>
+
 ### LN Url Withdraw
 
 Generate an LNURL-withdraw link.
@@ -238,6 +254,8 @@ const lnUrlWithdraw = await lnpay.lnUrlWithdraw({
 });
 console.log(lnUrlWithdraw);
 ```
+
+<br/>
 
 ### Get Invoice Status
 
