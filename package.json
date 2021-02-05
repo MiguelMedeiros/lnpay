@@ -1,6 +1,6 @@
 {
   "name": "lnpay",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "NPM Package for LNPay.co API.",
   "main": "lib/index.js",
   "author": "MiguelMedeiros\\Miguel Medeiros <miguel@miguelmedeiros.com.br>",
