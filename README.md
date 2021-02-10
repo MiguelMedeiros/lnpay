@@ -323,7 +323,7 @@ console.log(paywall);
 - LNPay Website: [https://lnpay.co](https://lnpay.co)
 - LNPay API Documentation: [https://docs.lnpay.co/](https://docs.lnpay.co/)
 - LNPay Telegram Group: [https://t.me/paywallers](https://t.me/paywallers)
-- Author of this repository: [https://miguelmedeiros.com](https://miguelmedeiros.com.br)
+- Author of this repository: [https://miguelmedeiros.com.br](https://miguelmedeiros.com.br)
 
 ---
 
