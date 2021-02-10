@@ -2,7 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/lnpay.svg?style=flat-square)](https://www.npmjs.org/package/lnpay)
 [![NPM](https://img.shields.io/david/MiguelMedeiros/lnpay.svg?style=flat-square)](https://david-dm.org/MiguelMedeiros/lnpay#info=dependencies)
-[![Known Vulnerabilities](https://snyk.io/test/github/MiguelMedeiros/lnpay/badge.svg)](https://snyk.io/test/github/MiguelMedeiros/lnpay-api)
+[![Known Vulnerabilities](https://snyk.io/test/github/MiguelMedeiros/lnpay/badge.svg?style=flat-square)](https://snyk.io/test/github/MiguelMedeiros/lnpay-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 ---
 
