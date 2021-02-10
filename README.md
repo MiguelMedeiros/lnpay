@@ -10,6 +10,16 @@ The goal of the LNPay API is to create a toolkit interface for interaction betwe
 
 ---
 
+## Donate
+
+Help me to stack sats! :blush:
+
+[bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
+
+[Or donate via Lightning Network!](https://paywall.link/to/lnpayapi)
+
+---
+
 ## Features
 
 - :pushpin: [Instalation](#installation)
@@ -277,23 +287,42 @@ const getInvoice = await lnpay.getInvoice({
 console.log(getInvoice);
 ```
 
+<br/>
+
+### Create Paywall
+
+Retrieve a LN transaction (invoice). This is usually used to see if a transaction has been settled or not, and for how much.
+
+[Official Documentation](https://docs.lnpay.co/lntx/get-invoice-status)
+/
+[Code Example](examples/getInvoice.ts)
+
+Parameters:
+
+- {Object} params - Params object.
+- {string} params.destination_url
+- {string} params.memo
+- {string} params.short_url
+- {number} params.num_satoshis
+
+```js
+const paywall = await lnpay.createPaywall({
+  destination_url: 'https://bigsun.xyz',
+  memo: 'This is my memo',
+  short_url: 'bigsun',
+  num_satoshis: 100,
+});
+console.log(paywall);
+```
+
 ---
 
 ## References
 
 - LNPay Website: [https://lnpay.co](https://lnpay.co)
 - LNPay API Documentation: [https://docs.lnpay.co/](https://docs.lnpay.co/)
-- My Website: [https://miguelmedeiros.com](https://miguelmedeiros.com.br)
-
----
-
-## Donate
-
-Help me to stack sats! :blush:
-
-[bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
-
-[Or donate via Lightning Network!](https://paywall.link/to/lnpayapi)
+- LNPay Telegram Group: [https://t.me/paywallers](https://t.me/paywallers)
+- Author of this repository: [https://miguelmedeiros.com](https://miguelmedeiros.com.br)
 
 ---
 

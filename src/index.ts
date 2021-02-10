@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 interface LNPayConfig {
   secretKey: string;
@@ -10,99 +10,154 @@ class LNPayClass {
   walletAccessKey = '';
   api: any;
 
-  /**
-   * Class constructor.
-   *
-   * @param {LNPayConfig} params - Params object.
-   */
   constructor(params: LNPayConfig) {
-    try {
-      this.secretKey = params.secretKey;
-      this.walletAccessKey = params.walletAccessKey || '';
-      this.api = axios.create({
-        baseURL: 'https://lnpay.co/v1',
-        headers: {
-          'X-API-Key': this.secretKey,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    this.secretKey = params.secretKey;
+    this.walletAccessKey = params.walletAccessKey || '';
+    this.api = axios.create({
+      baseURL: 'https://lnpay.co/v1',
+      headers: {
+        'X-API-Key': this.secretKey,
+      },
+    });
   }
 
-  /**
-   * Create a new wallet and corresponding access keys.
-   *
-   * @param {Object} params - Params object.
-   * @param {string} params.user_label - An internal identifier for this wallet.
-   */
   createWallet = async (params: { user_label: string }) => {
-    try {
-      return await this.api
-        .post(`/wallet`, params)
-        .then((res: any) => {
-          this.secretKey = res.data.access_keys['Wallet Admin'][0];
+    return await this.api
+      .post(`/wallet`, params)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            updated_at: number;
+            user_label: string;
+            balance: number;
+            statusType: { type: string; name: string; display_name: string };
+            access_keys: {
+              'Wallet Admin': string[];
+              'Wallet Invoice': string[];
+              'Wallet Read': string[];
+            };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Returns info about the wallet, including balance.
-   */
   getBalance = async () => {
-    try {
-      return await this.api
-        .get(`/wallet/${this.walletAccessKey}`)
-        .then((res: any) => {
+    return await this.api
+      .get(`/wallet/${this.walletAccessKey}`)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            updated_at: number;
+            user_label: string;
+            balance: number;
+            statusType: { type: string; name: string; display_name: string };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Get a list of wallet transactions that have been SETTLED. This includes only transactions that have an impact on wallet balance. These DO NOT include unsettled/unpaid invoices.
-   *
-   * @param {Object} [params] - Params object.
-   * @param {number} [params.page] - Page number.
-   */
   getTransactions = async (params: { page?: number }) => {
-    try {
-      return await this.api
-        .get(`/wallet/${this.walletAccessKey}/transactions`, {
-          params,
-        })
-        .then((res: any) => {
+    return await this.api
+      .get(`/wallet/${this.walletAccessKey}/transactions`, {
+        params,
+      })
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            num_satoshis: number;
+            user_label: string;
+            wal: {
+              id: string;
+              created_at: number;
+              updated_at: number;
+              user_label: string;
+              balance: number;
+              statusType: Record<string, unknown>;
+            };
+            wtxType: {
+              layer: string;
+              name: string;
+              display_name: string;
+            };
+            lnTx: {
+              id: string;
+              created_at: number;
+              ln_node_id: string;
+              dest_pubkey: string;
+              payment_request: string;
+              r_hash_decoded: string;
+              memo: string;
+              description_hash: string;
+              num_satoshis: number;
+              fee_msat: number;
+              expiry: number;
+              expires_at: number;
+              payment_preimage: string;
+              settled: number;
+              settled_at: number;
+              is_keysend: string;
+              custom_records: string;
+            };
+            passThru: Record<string, unknown>;
+          }[];
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Generate a new Invoice payment.
-   *
-   * @param {Object} params - Params object.
-   * @param {number} params.num_satoshis - The number of satoshis of the invoice.
-   * @param {Object} [params.passTru] - JSON object. you can reference these parameters later via webhooks, etc. Good for ticket # or a certain ID.
-   * @param {string} [params.description_hash] - base64 encoded hash of payment. If this is provided, memo will be ignored.
-   * @param {Object} [params.memo] - Add a memo text.
-   * @param {Object} [params.expiry] - Expires in seconds, defaults to 86400 (1 day)
-   */
   generateInvoice = async (
     params: {
       num_satoshis: number;
@@ -115,154 +170,450 @@ class LNPayClass {
       expiry: 86400,
     }
   ) => {
-    try {
-      return await this.api
-        .post(`/wallet/${this.walletAccessKey}/invoice`, params)
-        .then((res: any) => {
+    return await this.api
+      .post(`/wallet/${this.walletAccessKey}/invoice`, params)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            ln_node_id: string;
+            dest_pubkey: string;
+            payment_request: string;
+            r_hash_decoded: string;
+            memo: string;
+            description_hash: string;
+            num_satoshis: number;
+            fee_msat: number;
+            expiry: number;
+            expires_at: number;
+            payment_preimage: string;
+            settled: number;
+            settled_at: string;
+            is_keysend: string;
+            custom_records: string;
+            passThru: any;
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Generate an LN payment invoice from the specified wallet.
-   *
-   * @param {Object} params - Params object.
-   * @param {string} params.payment_request - Payment request string.
-   * @param {Object} [params.passTru] - JSON object of custom data to pass thru.
-   */
   payInvoice = async (params: {
     payment_request: string;
     passThru?: Record<string, unknown>;
   }) => {
-    try {
-      return await this.api
-        .post(`/wallet/${this.walletAccessKey}/withdraw`, params)
-        .then((res: any) => {
+    return await this.api
+      .post(`/wallet/${this.walletAccessKey}/withdraw`, params)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            num_satoshis: number;
+            user_label: string;
+            wal: {
+              id: string;
+              created_at: number;
+              updated_at: number;
+              user_label: string;
+              balance: number;
+              statusType: {
+                type: string;
+                name: string;
+                display_name: string;
+              };
+            };
+            wtxType: {
+              layer: string;
+              name: string;
+              display_name: string;
+            };
+            lnTx: {
+              id: string;
+              created_at: number;
+              dest_pubkey: string;
+              payment_request: string;
+              r_hash_decoded: string;
+              memo: string;
+              description_hash: string;
+              num_satoshis: number;
+              expiry: number;
+              expires_at: number;
+              payment_preimage: string;
+              settled: number;
+              settled_at: number;
+              is_keysend: string;
+              custom_records: string;
+            };
+            passThru: {
+              method: string;
+            };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Initiate a keysend payment from your wallet to a destination pubkey.
-   *
-   * @param {Object} params - Params object.
-   * @param {number} params.dest_pubkey - Pubkey of destination node.
-   * @param {Object} params.num_satoshis - The number of satoshis of the invoice.
-   * @param {string} [params.passTru] - Data to pass along with this invoice for webhooks (e.g. ticketId, etc)
-   * @param {Object} [params.custom_records] - key:value pairs to be sent in the onion. key must be an integer greater than 65536. value must be a string, encoded binary data is not supported. Too many values here will break things.
-   */
   keysend = async (params: {
     dest_pubkey: string;
     num_satoshis: number;
     passTru?: Record<string, unknown>;
     custom_records?: Record<string, unknown>;
   }) => {
-    try {
-      return await this.api
-        .post(`/wallet/${this.walletAccessKey}/keysend`, params)
-        .then((res: any) => {
+    return await this.api
+      .post(`/wallet/${this.walletAccessKey}/keysend`, params)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            num_satoshis: number;
+            user_label: string;
+            wal: {
+              id: string;
+              created_at: number;
+              updated_at: number;
+              user_label: string;
+              balance: number;
+              statusType: {
+                type: string;
+                name: string;
+                display_name: string;
+              };
+            };
+            wtxType: {
+              layer: string;
+              name: string;
+              display_name: string;
+            };
+            lnTx: {
+              id: string;
+              created_at: number;
+              ln_node_id: string;
+              dest_pubkey: string;
+              payment_request: string;
+              r_hash_decoded: string;
+              memo: string;
+              description_hash: string;
+              num_satoshis: number;
+              expiry: number;
+              expires_at: string;
+              payment_preimage: string;
+              settled: number;
+              settled_at: number;
+              is_keysend: number;
+              custom_records: any;
+            };
+            passThru: {
+              method: string;
+              ticketId: string;
+            };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * This section describes how to transfer sats between wallets within LNPay.
-   *
-   * @param {Object} params - Params object.
-   * @param {string} params.dest_wallet_id - Destination wallet access key (WAK) or wallet_id
-   * @param {number} params.num_satoshis - Sats for this transfer
-   * @param {string} params.memo - Memo note for this transfer
-   * @param {string} params.lnPayParams - JSON array of custom data to pass thru.
-   */
   transfer = async (params: {
     dest_wallet_id: string;
     num_satoshis: number;
     memo?: string;
-    lnPayParams?: string[];
+    lnPayParams?: Record<string, unknown>;
   }) => {
-    try {
-      return await this.api
-        .post(`/wallet/${this.walletAccessKey}/transfer`, params)
-        .then((res: any) => {
+    return await this.api
+      .post(`/wallet/${this.walletAccessKey}/transfer`, params)
+      .then(
+        (res: {
+          data: {
+            wtx_transfer_in: {
+              id: string;
+              created_at: number;
+              num_satoshis: number;
+              user_label: string;
+              wal: {
+                id: string;
+                created_at: number;
+                updated_at: number;
+                user_label: string;
+                balance: number;
+                statusType: string;
+              };
+              wtxType: {
+                layer: string;
+                name: string;
+                display_name: string;
+              };
+              lnTx: null;
+              passThru: {
+                lnPayParams: Record<string, unknown>;
+                dest_wallet_id: string;
+                source_wallet_id: string;
+              };
+            };
+            wtx_transfer_out: {
+              id: string;
+              created_at: number;
+              num_satoshis: number;
+              user_label: string;
+              wal: {
+                id: string;
+                created_at: number;
+                updated_at: number;
+                user_label: string;
+                balance: number;
+                statusType: Record<string, unknown>;
+              };
+              wtxType: {
+                layer: string;
+                name: string;
+                display_name: string;
+              };
+              lnTx: null;
+              passThru: {
+                lnPayParams: Record<string, unknown>;
+                dest_wallet_id: string;
+                source_wallet_id: string;
+              };
+            };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Generate an LNURL-withdraw link.
-   *
-   * @param {Object} [params] - Params object.
-   * @param {boolean} [params.public] - (default: false) if set to true, the LNURL will be a one-time allowable withdraw for the amount set with no sensitive data in the LNURL. Good for public use.
-   * @param {string} [params.passTru] - Base64 encoded json of data to use in webhooks, etc
-   * @param {string} [params.memo] - Memo note for the invoice.
-   * @param {number} [params.num_satoshis] - Max number of satoshis this LNURL is good for. If blank max wallet balance is used.
-   */
   lnUrlWithdraw = async (params: {
     public?: boolean;
     passTru?: string;
     memo?: string;
     num_satoshis?: number;
   }) => {
-    try {
-      return await this.api
-        .get(`/wallet/${this.walletAccessKey}/lnurl/withdraw`, params)
-        .then((res: any) => {
+    return await this.api
+      .get(`/wallet/${this.walletAccessKey}/lnurl/withdraw`, params)
+      .then(
+        (res: {
+          data: {
+            lnurl: string;
+            ott: string;
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 
-  /**
-   * Retrieve a LN transaction (invoice). This is usually used to see if a transaction has been settled or not, and for how much.
-   *
-   * @param {Object} params - Params object.
-   * @param {string} params.id - Transaction id. e.g. lntx_82yveCX2Wn0EkkdyzvyBv
-   */
   getInvoice = async (params: { id: string }) => {
-    try {
-      return await this.api
-        .get(`lntx/${params.id}`)
-        .then((res: any) => {
+    return await this.api
+      .get(`/lntx/${params.id}`)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            num_satoshis: number;
+            user_label: string;
+            wal: {
+              id: string;
+              created_at: number;
+              updated_at: number;
+              user_label: string;
+              balance: number;
+              statusType: {
+                type: string;
+                name: string;
+                display_name: string;
+              };
+            };
+            wtxType: {
+              layer: string;
+              name: string;
+              display_name: string;
+            };
+            lnTx: {
+              id: string;
+              created_at: number;
+              dest_pubkey: string;
+              payment_request: string;
+              r_hash_decoded: string;
+              memo: string;
+              description_hash: string;
+              num_satoshis: number;
+              expiry: number;
+              expires_at: number;
+              payment_preimage: string;
+              settled: number;
+              settled_at: number;
+              is_keysend: string;
+              custom_records: string;
+            };
+            passThru: {
+              method: string;
+            };
+          };
+        }) => {
           return res.data;
-        })
-        .catch((err: any) => {
-          return err.response.data;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
+  };
+
+  createPaywall = async (params: {
+    destination_url: string;
+    short_url?: string;
+    memo?: string;
+    num_satoshis?: number;
+    template_id?: string;
+    link_rule_exp_id?: string;
+  }) => {
+    return await this.api
+      .post(`/paywall`, params)
+      .then(
+        (res: {
+          data: {
+            id: string;
+            created_at: number;
+            updated_at: number;
+            destination_url: string;
+            memo: string;
+            short_url: string;
+            paywall_link: string;
+            template: string;
+            num_satoshis: number;
+            passThru: {
+              extraAttributes: {
+                unlock_threshold: number;
+                identifier_in_memo: false;
+                send_partial_preimage_redirect: false;
+              };
+            };
+            custyDomain: {
+              domain_name: string;
+            };
+            statusType: {
+              type: string;
+              name: string;
+              display_name: string;
+            };
+            paywallType: {
+              name: string;
+              display_name: string;
+              description: string;
+            };
+            linkExpRule: {
+              type: string;
+              name: string;
+              display_name: string;
+              time_minutes: number;
+            };
+          };
+        }) => {
+          return res.data;
+        }
+      )
+      .catch(
+        (err: {
+          response: {
+            data: {
+              name: string;
+              message: string;
+              code: number;
+              status: number;
+            };
+          };
+        }) => {
+          throw new Error(err.response.data.message);
+        }
+      );
   };
 }
 
-module.exports = (params: LNPayConfig): LNPayClass => {
+export default (params: LNPayConfig): LNPayClass => {
   return new LNPayClass(params);
 };

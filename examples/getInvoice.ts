@@ -1,4 +1,4 @@
-const LNPay = require('../src/index');
+import LNPay from '../src/index';
 
 const init = async () => {
   // LNPay Initial Config
