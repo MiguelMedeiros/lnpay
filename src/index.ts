@@ -14,7 +14,7 @@ class LNPayClass {
     this.secretKey = params.secretKey;
     this.walletAccessKey = params.walletAccessKey || '';
     this.api = axios.create({
-      baseURL: 'https://lnpay.co/v1',
+      baseURL: 'https://api.lnpay.co/v1',
       headers: {
         'X-API-Key': this.secretKey,
       },
