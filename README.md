@@ -136,7 +136,7 @@ Parameters:
 
 - {Object} params - Params object.
 - {number} params.num_satoshis - The number of satoshis of the invoice.
-- {Object} [params.passTru] - JSON object. you can reference these parameters later via webhooks, etc. Good for ticket # or a certain ID.
+- {Object} [params.passThru] - JSON object. you can reference these parameters later via webhooks, etc. Good for ticket # or a certain ID.
 - {string} [params.description_hash] - base64 encoded hash of payment. If this is provided, memo will be ignored.
 - {Object} [params.memo] - Add a memo text.
 - {Object} [params.expiry] - Expires in seconds, defaults to 86400 (1 day)
@@ -144,7 +144,7 @@ Parameters:
 ```js
 const invoice = await lnpay.generateInvoice({
   num_satoshis: 100,
-  passTru: {
+  passThru: {
     order_id: '100',
   },
   description_hash: 'MTIzNDY1Nzg5N...',
@@ -168,12 +168,12 @@ Parameters:
 
 - {Object} params - Params object.
 - {string} params.payment_request - Payment request string.
-- {Object} [params.passTru] - JSON object of custom data to pass thru.
+- {Object} [params.passThru] - JSON object of custom data to pass thru.
 
 ```js
 const payInvoice = await lnpay.payInvoice({
   payment_request: 'lnbc50n1p0qjf84p...',
-  passTru: {
+  passThru: {
     order_id: '100',
   },
 });
@@ -195,12 +195,12 @@ Parameters:
 - {Object} params - Params object.
 - {number} params.dest_pubkey - Pubkey of destination node.
 - {Object} params.num_satoshis - The number of satoshis of the invoice.
-- {string} [params.passTru] - Data to pass along with this invoice for webhooks (e.g. ticketId, etc)
+- {string} [params.passThru] - Data to pass along with this invoice for webhooks (e.g. ticketId, etc)
 - {Object} [params.custom_records] - key:value pairs to be sent in the onion. key must be an integer greater than 65536. value must be a string, encoded binary data is not supported. Too many values here will break things.
 
 ```js
 const keysend = await lnpay.keysend({
-  passTru: {
+  passThru: {
     order_id: '100',
   },
   dest_pubkey: '033868c219bdb51a3...',
@@ -253,7 +253,7 @@ Parameters:
 
 - {Object} [params] - Params object.
 - {boolean} [params.public] - (default: false) if set to true, the LNURL will be a one-time allowable withdraw for the amount set with no sensitive data in the LNURL. Good for public use.
-- {string} [params.passTru] - Base64 encoded json of data to use in webhooks, etc
+- {string} [params.passThru] - Base64 encoded json of data to use in webhooks, etc
 - {string} [params.memo] - Memo note for the invoice.
 - {number} [params.num_satoshis] - Max number of satoshis this LNURL is good for. If blank max wallet balance is used.
 
