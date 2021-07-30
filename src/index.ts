@@ -161,7 +161,7 @@ class LNPayClass {
   generateInvoice = async (
     params: {
       num_satoshis: number;
-      passTru?: Record<string, unknown>;
+      passThru?: Record<string, unknown>;
       description_hash?: string;
       memo?: string;
       expiry?: number;
@@ -288,7 +288,7 @@ class LNPayClass {
   keysend = async (params: {
     dest_pubkey: string;
     num_satoshis: number;
-    passTru?: Record<string, unknown>;
+    passThru?: Record<string, unknown>;
     custom_records?: Record<string, unknown>;
   }) => {
     return await this.api
@@ -444,7 +444,7 @@ class LNPayClass {
 
   lnUrlWithdraw = async (params: {
     public?: boolean;
-    passTru?: string;
+    passThru?: string;
     memo?: string;
     num_satoshis?: number;
   }) => {
