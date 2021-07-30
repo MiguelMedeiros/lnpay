@@ -11,7 +11,7 @@ const init = async () => {
   // https://docs.lnpay.co/wallet/pay-invoice
   const payInvoice = await lnpay.payInvoice({
     payment_request: 'lnbc50n1p0qjf84p...',
-    passTru: {
+    passThru: {
       order_id: '100',
     },
   });

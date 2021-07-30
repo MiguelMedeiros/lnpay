@@ -11,7 +11,7 @@ const init = async () => {
   // https://docs.lnpay.co/wallet/generate-invoice
   const invoice = await lnpay.generateInvoice({
     num_satoshis: 100,
-    passTru: {
+    passThru: {
       order_id: '100',
     },
     description_hash: 'MTIzNDY1Nzg5NDU2MTMyNDU2Nzg5NTQ2',

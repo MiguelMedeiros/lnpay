@@ -10,7 +10,7 @@ const init = async () => {
   // Keysend
   // https://docs.lnpay.co/wallet/keysend
   const keysend = await lnpay.keysend({
-    passTru: {
+    passThru: {
       order_id: '100',
     },
     dest_pubkey:
