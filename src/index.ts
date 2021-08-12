@@ -99,6 +99,12 @@ class LNPayClass {
       })
       .then(
         (res: {
+          headers: {
+            'x-pagination-total-count': number,
+            'x-pagination-page-count': number,
+            'x-pagination-current-page': number,
+            'x-pagination-per-page': number,
+          },
           data: {
             id: string;
             created_at: number;
@@ -137,9 +143,25 @@ class LNPayClass {
               custom_records: string;
             };
             passThru: Record<string, unknown>;
-          }[];
+            
+          }[],
+          pagination: {
+            total_count: number,
+            page_count: number,
+            current_page: number,
+            per_page: number,
+          };
         }) => {
-          return res.data;
+          const pagination = {
+            total_count: res.headers['x-pagination-total-count'],
+            page_count: res.headers['x-pagination-page-count'],
+            current_page: res.headers['x-pagination-current-page'],
+            per_page: res.headers['x-pagination-per-page'],
+          }          
+          return {
+            data: res.data,
+            pagination: pagination,
+          }
         }
       )
       .catch(
