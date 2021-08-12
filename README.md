@@ -15,15 +15,13 @@ The goal of the LNPay API is to create a toolkit interface for interaction betwe
 
 Help me to stack sats! :blush:
 
-[bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02](bitcoin:bc1q4m9hs4fv3etleyqgp4jhvak0q3w26mmkntqq02)
-
-[Or donate via Lightning Network!](https://paywall.link/to/lnpayapi)
+[Donate via Lightning Network!](https://paywall.link/to/lnpayapi)
 
 ---
 
 ## Features
 
-- :pushpin: [Instalation](#installation)
+- :pushpin: [Installation](#installation)
 - :pushpin: [Usage](#usage)
 - :pushpin: [References](#references)
 - :pushpin: [Donate](#donate)
